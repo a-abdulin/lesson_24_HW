@@ -41,15 +41,15 @@ def limit_(param: str, data: list[str]) -> list[str]:
 
 FILE_NAME = './apache_logs.txt'
 
-def read_file():
-    with open(FILE_NAME) as file:
-        file_data = list(map(lambda row: row.strip(), file))
-    return file_data
+# def read_file():
+#     with open(FILE_NAME) as file:
+#         file_data = list(map(lambda row: row.strip(), file))
+#     return file_data
 
 
 def get_query(cmd: str, param, data=None):
-    if not data:
-        data = read_file()
+    # if not data:
+    #     data = read_file()
     if cmd == 'filter':
         return filter_(param=param, data=data)
     elif cmd == 'limit':

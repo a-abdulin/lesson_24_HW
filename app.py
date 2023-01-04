@@ -26,9 +26,9 @@ def post():
     except ValidationError:
         return f'cmd functions are not correct', 500
 
-    result = None
-    result = get_query(data['cmd1'], data['value1'], result)
-    result = get_query(data['cmd2'], data['value2'], result)
+    with open(os.path.join(DATA_DIR, data['file_name'])) as result:
+        result = get_query(data['cmd1'], data['value1'], result)
+        result = get_query(data['cmd2'], data['value2'], result)
 
 
     # получить параметры query и file_name из request.args, при ошибке вернуть ошибку 400
