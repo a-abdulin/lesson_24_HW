@@ -19,7 +19,7 @@ def post():
     except ValidationError:
         return f'Request is incorrect', 500
 
-    values_cmd = ['sort', 'filter', 'limit', 'map', 'unique']
+    values_cmd = ['sort', 'filter', 'limit', 'map', 'unique', 'regex']
     try:
         if data['cmd1'] not in values_cmd or data['cmd2'] not in values_cmd:
             raise ValidationError
@@ -30,12 +30,6 @@ def post():
         result = get_query(data['cmd1'], data['value1'], result)
         result = get_query(data['cmd2'], data['value2'], result)
 
-
-    # получить параметры query и file_name из request.args, при ошибке вернуть ошибку 400
-    # проверить, что файла file_name существует в папке DATA_DIR, при ошибке вернуть ошибку 400
-    # с помощью функционального программирования (функций filter, map), итераторов/генераторов сконструировать запрос
-    # вернуть пользователю сформированный результат
-    # return app.response_class('', content_type="text/plain")
     return jsonify(result), 200
 
 

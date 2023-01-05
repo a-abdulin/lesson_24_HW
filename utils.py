@@ -1,3 +1,5 @@
+import re
+
 
 # CMD_MAPPING = {
 #     'filter': filter_,
@@ -39,17 +41,24 @@ def limit_(param: str, data: list[str]) -> list[str]:
     return data[:num]
 
 
-FILE_NAME = './apache_logs.txt'
+def regex_(param: str, data: list[str]) -> list[str]:
+    if 'png' in param:
+        regex_param = 'images\/\S*\.png'
+    else:
+        raise ValueError
 
-# def read_file():
-#     with open(FILE_NAME) as file:
-#         file_data = list(map(lambda row: row.strip(), file))
-#     return file_data
+    patern_ = re.compile(regex_param)
+    result = []
+    for line in data:
+        item = patern_.findall(line)
+        if item:
+            result.append(line)
+    return result
 
+# images/*.png
+# images\/\S*\.png
 
 def get_query(cmd: str, param, data=None):
-    # if not data:
-    #     data = read_file()
     if cmd == 'filter':
         return filter_(param=param, data=data)
     elif cmd == 'limit':
@@ -60,6 +69,12 @@ def get_query(cmd: str, param, data=None):
         return sort_(param=param, data=data)
     elif cmd == 'unique':
         return unique_(param=param, data=data)
+    elif cmd == "regex":
+        try:
+            return regex_(param=param, data=data)
+        except ValueError as e:
+            print('Ошибка параметра regex')
+
 
     # return CMD_MAPPING[cmd](param=param, data=data)
 
